@@ -1,6 +1,6 @@
 using System;
 
-namespace CITYDRIVE_MANAGER
+namespace CITYDRIVE_MANAGER.PointOfInterest
 {
     public class HistoricalMonument : PointOfInterest
     {
