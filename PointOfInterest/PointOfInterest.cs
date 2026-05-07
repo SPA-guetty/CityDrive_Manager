@@ -1,6 +1,6 @@
 using System;
 
-namespace CITYDRIVE_MANAGER.PointOfInterest
+namespace CITYDRIVE_MANAGER.PointOfInterest_Folder
 {
     public class PointOfInterest
     {
