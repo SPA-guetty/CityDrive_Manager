@@ -1,0 +1,15 @@
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/obj/Debug/net10.0/citydriverapp.GeneratedMSBuildEditorConfig.editorconfig
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/obj/Debug/net10.0/citydriverapp.AssemblyInfoInputs.cache
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/obj/Debug/net10.0/citydriverapp.AssemblyInfo.cs
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/obj/Debug/net10.0/citydriverapp.csproj.CoreCompileInputs.cache
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/obj/Debug/net10.0/citydriverapp.sourcelink.json
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/bin/Debug/net10.0/citydriverapp
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/bin/Debug/net10.0/citydriverapp.deps.json
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/bin/Debug/net10.0/citydriverapp.runtimeconfig.json
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/bin/Debug/net10.0/citydriverapp.dll
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/bin/Debug/net10.0/citydriverapp.pdb
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/obj/Debug/net10.0/citydriverapp.dll
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/obj/Debug/net10.0/refint/citydriverapp.dll
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/obj/Debug/net10.0/citydriverapp.pdb
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/obj/Debug/net10.0/citydriverapp.genruntimeconfig.cache
+/home/spaguetty/B2/CityDrive_Manager/citydriverapp/obj/Debug/net10.0/ref/citydriverapp.dll
