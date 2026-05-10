@@ -71,5 +71,23 @@ namespace CITYDRIVE_MANAGER
 
             return strday + "/" + strmonth + "/" + stryear;
         }
+
+        public static DateTime FromStringToDateTime(string dateStr)
+        {
+            return DateTime.ParseExact(dateStr, "dd/MM/yyyy HH:mm", null);
+        }
+
+        public static string ToString()
+        {
+            string tripstring = "";
+            tripstring += "Véhicule : " + this.Vehicle.Brand + "\n";
+            tripstring += "Départ : " + this.Start.Name + "\n";
+            tripstring += "Arrivée : " + this.Destination.Name + "\n";
+            tripstring += "Distance : " + ToString(GetDistance()) + "\n";
+            tripstring += "Durée estimée : " + ToString(GetDurationInMinutes()) + " minutes" + "\n";
+            tripstring += "Départ prévu le : " + FromStringToDateTime(this.Starttime) + "\n";
+
+            return tripstring;
+        }
     }
 }
