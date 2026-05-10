@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\ynov\\CityDrive_Manager\\citydriverapp\\citydriverapp.csproj": {}
+    "/home/spaguetty/B2/CityDrive_Manager/citydriverapp/citydriverapp.csproj": {}
   },
   "projects": {
-    "E:\\ynov\\CityDrive_Manager\\citydriverapp\\citydriverapp.csproj": {
+    "/home/spaguetty/B2/CityDrive_Manager/citydriverapp/citydriverapp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\ynov\\CityDrive_Manager\\citydriverapp\\citydriverapp.csproj",
+        "projectUniqueName": "/home/spaguetty/B2/CityDrive_Manager/citydriverapp/citydriverapp.csproj",
         "projectName": "citydriverapp",
-        "projectPath": "E:\\ynov\\CityDrive_Manager\\citydriverapp\\citydriverapp.csproj",
-        "packagesPath": "C:\\Users\\amory\\.nuget\\packages\\",
-        "outputPath": "E:\\ynov\\CityDrive_Manager\\citydriverapp\\obj\\",
+        "projectPath": "/home/spaguetty/B2/CityDrive_Manager/citydriverapp/citydriverapp.csproj",
+        "packagesPath": "/home/spaguetty/.nuget/packages/",
+        "outputPath": "/home/spaguetty/B2/CityDrive_Manager/citydriverapp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\amory\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/spaguetty/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -38,7 +38,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net10.0": {
@@ -59,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/var/snap/dotnet/common/dotnet/sdk/10.0.107/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

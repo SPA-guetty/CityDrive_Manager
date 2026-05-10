@@ -1,18 +1,21 @@
 using System;
+using System.Security.Principal;
 
 namespace CITYDRIVE_MANAGER
 {
     public class Trip
     {
-        public Vehicles.Vehicle Vehicle { get; set; }
+        public string? Name { get; set; }
+        public Vehicles.Vehicle? Vehicle { get; set; }
         const double AVERAGE_SPEED = 50;
-        public CITYDRIVE_MANAGER.PointOfInterest_Folder.PointOfInterest Start { get; set; }
-        public PointOfInterest.PointOfInterest Destination { get; set; }
+        public CITYDRIVE_MANAGER.PointOfInterest_Folder.PointOfInterest? Start { get; set; }
+        public CITYDRIVE_MANAGER.PointOfInterest_Folder.PointOfInterest? Destination { get; set; }
         public DateTime Starttime { get; set; }
 
         public double GetDistance() 
         {
-            return Start.GetDistanceBetween(Start, Destination);
+            if (Start == null || Destination == null) return 0;
+            return CITYDRIVE_MANAGER.PointOfInterest_Folder.PointOfInterest.GetDistanceBetween(Start, Destination);
         }
 
         public double GetDurationInMinutes()
@@ -20,10 +23,8 @@ namespace CITYDRIVE_MANAGER
             return (GetDistance() / AVERAGE_SPEED) * 60;
         }
 
-        public static double DifferenceInMinutes()
+        public static double DifferenceInMinutes(DateTime start, DateTime end)
         {
-            start = DateTime.Now;
-            end = Start;
             if (start > end)
             {
                 DateTime temp = start;
@@ -77,15 +78,41 @@ namespace CITYDRIVE_MANAGER
             return DateTime.ParseExact(dateStr, "dd/MM/yyyy HH:mm", null);
         }
 
-        public static string ToString()
+        public static (int, int) GetHourMinutsFromMinutes(double minutes)
         {
+            int totalMinutes = (int)Math.Round(minutes);
+
+            if (totalMinutes > 60) {
+                int hours = totalMinutes / 60;
+                int remainingminutes = totalMinutes % 60;
+
+                return (hours, remainingminutes);
+            }
+
+            return (0, totalMinutes);
+        }
+
+        public static string FormatTime(int hours, int minutes)
+        {
+            if (hours == 0)
+            {
+                return $"{minutes} minutes";
+            }
+            return $"{hours}h{minutes:D2}";
+        }
+
+        public override string ToString()
+        {
+            (int h, int m) = GetHourMinutsFromMinutes(GetDurationInMinutes());
+
             string tripstring = "";
-            tripstring += "Véhicule : " + this.Vehicle.Brand + "\n";
-            tripstring += "Départ : " + this.Start.Name + "\n";
-            tripstring += "Arrivée : " + this.Destination.Name + "\n";
-            tripstring += "Distance : " + ToString(GetDistance()) + "\n";
-            tripstring += "Durée estimée : " + ToString(GetDurationInMinutes()) + " minutes" + "\n";
-            tripstring += "Départ prévu le : " + FromStringToDateTime(this.Starttime) + "\n";
+            tripstring += "Nom : " + (this.Name ?? "Unknown") + "\n";
+            tripstring += "Véhicule : " + (this.Vehicle?.Brand ?? "Unknown") + "\n";
+            tripstring += "Départ : " + (this.Start?.Name ?? "Unknown") + "\n";
+            tripstring += "Arrivée : " + (this.Destination?.Name ?? "Unknown") + "\n";
+            tripstring += "Distance : " + GetDistance() + " Km\n";
+            tripstring += "Durée estimée : " + FormatTime(h, m) + "\n";
+            tripstring += "Départ prévu le : " + DisplayDateWithoutTime(this.Starttime) + "\n";
 
             return tripstring;
         }

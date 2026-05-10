@@ -1,4 +1,5 @@
 using System;
+using System.Security.Principal;
 
 namespace CITYDRIVE_MANAGER
 {
@@ -77,15 +78,40 @@ namespace CITYDRIVE_MANAGER
             return DateTime.ParseExact(dateStr, "dd/MM/yyyy HH:mm", null);
         }
 
+        public static (int, int) GetHourMinutsFromMinutes(double minutes)
+        {
+            int totalMinutes = (int)Math.Round(minutes);
+
+            if (totalMinutes > 60) {
+                int hours = totalMinutes / 60;
+                int remainingminutes = totalMinutes % 60;
+
+                return (hours, remainingminutes);
+            }
+
+            return (0, totalMinutes);
+        }
+
+        public static string FormatTime(int hours, int minutes)
+        {
+            if (hours == 0)
+            {
+                return $"{minutes} minutes";
+            }
+            return $"{hours}h{minutes:D2}";
+        }
+
         public override string ToString()
         {
+            (int h, int m) = GetHourMinutsFromMinutes(GetDurationInMinutes());
+
             string tripstring = "";
             tripstring += "Nom : " + (this.Name ?? "Unknown") + "\n";
             tripstring += "Véhicule : " + (this.Vehicle?.Brand ?? "Unknown") + "\n";
             tripstring += "Départ : " + (this.Start?.Name ?? "Unknown") + "\n";
             tripstring += "Arrivée : " + (this.Destination?.Name ?? "Unknown") + "\n";
-            tripstring += "Distance : " + GetDistance() + "\n";
-            tripstring += "Durée estimée : " + GetDurationInMinutes() + " minutes" + "\n";
+            tripstring += "Distance : " + GetDistance() + " Km\n";
+            tripstring += "Durée estimée : " + FormatTime(h, m) + "\n";
             tripstring += "Départ prévu le : " + DisplayDateWithoutTime(this.Starttime) + "\n";
 
             return tripstring;
