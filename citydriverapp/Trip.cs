@@ -4,14 +4,16 @@ namespace CITYDRIVE_MANAGER
 {
     public class Trip
     {
-        public Vehicles.Vehicle Vehicle { get; set; }
+        public string? Name { get; set; }
+        public Vehicles.Vehicle? Vehicle { get; set; }
         const double AVERAGE_SPEED = 50;
-        public CITYDRIVE_MANAGER.PointOfInterest_Folder.PointOfInterest Start { get; set; }
-        public CITYDRIVE_MANAGER.PointOfInterest_Folder.PointOfInterest Destination { get; set; }
+        public CITYDRIVE_MANAGER.PointOfInterest_Folder.PointOfInterest? Start { get; set; }
+        public CITYDRIVE_MANAGER.PointOfInterest_Folder.PointOfInterest? Destination { get; set; }
         public DateTime Starttime { get; set; }
 
         public double GetDistance() 
         {
+            if (Start == null || Destination == null) return 0;
             return CITYDRIVE_MANAGER.PointOfInterest_Folder.PointOfInterest.GetDistanceBetween(Start, Destination);
         }
 
@@ -78,9 +80,10 @@ namespace CITYDRIVE_MANAGER
         public override string ToString()
         {
             string tripstring = "";
-            tripstring += "Véhicule : " + this.Vehicle.Brand + "\n";
-            tripstring += "Départ : " + this.Start.Name + "\n";
-            tripstring += "Arrivée : " + this.Destination.Name + "\n";
+            tripstring += "Nom : " + (this.Name ?? "Unknown") + "\n";
+            tripstring += "Véhicule : " + (this.Vehicle?.Brand ?? "Unknown") + "\n";
+            tripstring += "Départ : " + (this.Start?.Name ?? "Unknown") + "\n";
+            tripstring += "Arrivée : " + (this.Destination?.Name ?? "Unknown") + "\n";
             tripstring += "Distance : " + GetDistance() + "\n";
             tripstring += "Durée estimée : " + GetDurationInMinutes() + " minutes" + "\n";
             tripstring += "Départ prévu le : " + DisplayDateWithoutTime(this.Starttime) + "\n";

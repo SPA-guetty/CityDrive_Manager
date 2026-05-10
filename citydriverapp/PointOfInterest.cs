@@ -6,7 +6,7 @@ namespace CITYDRIVE_MANAGER.PointOfInterest_Folder
     {
         public Double Latitude { get; set; }
         public Double Longitude { get; set; }
-        public String Name { get; set; }
+        public string? Name { get; set; }
 
         public PointOfInterest() { }
 
@@ -19,12 +19,12 @@ namespace CITYDRIVE_MANAGER.PointOfInterest_Folder
 
         public string GetGoogleMapsUrl()
         {
-            return "https://www.google.com/maps/place/" + this.Name.Replace(' ', '+') + "/@" + this.Latitude + "," + this.Longitude + ",15z/";
+            return "https://www.google.com/maps/place/" + (this.Name ?? "Unknown").Replace(' ', '+') + "/@" + this.Latitude + "," + this.Longitude + ",15z/";
         }
 
         public override string ToString()
         {
-            return this.Name + " (Lat=" + this.Latitude + ", Long=" + this.Longitude + ")";
+            return (this.Name ?? "Unknown") + " (Lat=" + this.Latitude + ", Long=" + this.Longitude + ")";
         }
 
         public double GetDistance(PointOfInterest other)

@@ -22,5 +22,10 @@ namespace CITYDRIVE_MANAGER.Vehicles
                 }
             }
         }
+
+        public override string ToString()
+        {
+            return $"{Brand ?? "Unknown"} ({Color ?? "Unknown"}) - Speed: {CurrentSpeed} km/h, Fuel: {FuelLevel}L, Battery: {BatteryLevel}%";
+        }
     }
 }

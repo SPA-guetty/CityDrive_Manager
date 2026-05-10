@@ -1,156 +1,351 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using CITYDRIVE_MANAGER.PointOfInterest_Folder;
 using CITYDRIVE_MANAGER.Vehicles;
 
 namespace CITYDRIVE_MANAGER
 {
-    public class Test
+    public class Program
     {
-        public static void Main()
+        private static readonly List<PointOfInterest> Places = new List<PointOfInterest>();
+        private static readonly List<Vehicle> Vehicles = new List<Vehicle>();
+        private static readonly List<Trip> Trips = new List<Trip>();
+
+        public static void Main(string[] args)
         {
-            Console.WriteLine("===== TEST POINTS OF INTEREST =====\n");
-            TestPointsOfInterest();
+            Console.WriteLine("CityDrive Manager - Menu interactif");
+            bool exit = false;
 
-            Console.WriteLine("\n===== TEST VEHICLES =====\n");
-            TestVehicles();
+            while (!exit)
+            {
+                Console.WriteLine();
+                Console.WriteLine("1. Ajouter un point d’intérêt");
+                Console.WriteLine("2. Ajouter un véhicule");
+                Console.WriteLine("3. Afficher les véhicules");
+                Console.WriteLine("4. Afficher les lieux");
+                Console.WriteLine("5. Calculer une distance");
+                Console.WriteLine("6. Simuler une accélération/freinage");
+                Console.WriteLine("7. Créer un trajet");
+                Console.WriteLine("8. Afficher les trajets");
+                Console.WriteLine("9. Quitter");
+                Console.Write("Choix: ");
 
-            Console.WriteLine("\n===== TEST TRIP =====\n");
-            TestTrip();
+                string input = Console.ReadLine() ?? "";
+                Console.WriteLine();
 
-            Console.WriteLine("\n===== ALL TESTS COMPLETED =====\n");
+                switch (input)
+                {
+                    case "1": AddPointOfInterest(); break;
+                    case "2": AddVehicle(); break;
+                    case "3": ShowVehicles(); break;
+                    case "4": ShowPlaces(); break;
+                    case "5": CalculateDistance(); break;
+                    case "6": SimulateVehicle(); break;
+                    case "7": CreateTrip(); break;
+                    case "8": ShowTrips(); break;
+                    case "9": exit = true; break;
+                    default:
+                        Console.WriteLine("Choix invalide. Veuillez entrer un numéro de 1 à 9.");
+                        break;
+                }
+            }
+
+            Console.WriteLine("Au revoir.");
         }
 
-        public static void TestPointsOfInterest()
+        private static void AddPointOfInterest()
         {
-            // Test PointOfInterest base class
-            Console.WriteLine("-- Testing PointOfInterest --");
-            PointOfInterest poi1 = new PointOfInterest
+            Console.WriteLine("Ajouter un point d’intérêt");
+            Console.Write("Nom: ");
+            string name = Console.ReadLine() ?? "";
+            double latitude = ReadDouble("Latitude: ");
+            double longitude = ReadDouble("Longitude: ");
+            Console.WriteLine("Type de lieu: 1) Classique 2) Campus 3) Monument historique");
+            Console.Write("Choix: ");
+            string typeChoice = Console.ReadLine() ?? "";
+            PointOfInterest place;
+
+            switch (typeChoice)
             {
-                Name = "Eiffel Tower",
-                Latitude = 48.8584,
-                Longitude = 2.2945
-            };
-            Console.WriteLine("POI 1: " + poi1.ToString());
-            Console.WriteLine("Google Maps URL: " + poi1.GetGoogleMapsUrl());
+                case "2":
+                    var campus = new Campus();
+                    campus.Name = name;
+                    campus.Latitude = latitude;
+                    campus.Longitude = longitude;
+                    campus.Capacity = ReadInt("Capacité (nombre d’étudiants): ");
+                    place = campus;
+                    break;
+                case "3":
+                    var monument = new HistoricalMonument();
+                    monument.Name = name;
+                    monument.Latitude = latitude;
+                    monument.Longitude = longitude;
+                    monument.BuildYear = ReadInt("Année de construction: ");
+                    place = monument;
+                    break;
+                default:
+                    place = new PointOfInterest
+                    {
+                        Name = name,
+                        Latitude = latitude,
+                        Longitude = longitude
+                    };
+                    break;
+            }
 
-            // Test Campus class
-            Console.WriteLine("\n-- Testing Campus --");
-            Campus campus = new Campus
-            {
-                Name = "Paris University",
-                Latitude = 48.8566,
-                Longitude = 2.3522,
-                Capacity = 5000
-            };
-            Console.WriteLine("Campus: " + campus.ToString());
-
-            // Test HistoricalMonument class
-            Console.WriteLine("\n-- Testing HistoricalMonument --");
-            HistoricalMonument monument = new HistoricalMonument("Louvre Museum", 48.8606, 2.3352, 1793);
-            Console.WriteLine("Monument: " + monument.ToString());
-
-            // Test with constructor
-            HistoricalMonument monument2 = new HistoricalMonument("Arc de Triomphe", 48.8738, 2.2950, 1836);
-            Console.WriteLine("Monument 2: " + monument2.ToString());
+            Places.Add(place);
+            Console.WriteLine("Point d’intérêt ajouté : " + place);
         }
 
-        public static void TestVehicles()
+        private static void AddVehicle()
         {
-            // Test Car class
-            Console.WriteLine("-- Testing Car --");
-            Car car = new Car
-            {
-                Brand = "Toyota",
-                Color = "Blue",
-                Model = "Corolla",
-                CurrentSpeed = 0,
-                FuelLevel = 50
-            };
-            Console.WriteLine("Car: Brand=" + car.Brand + ", Model=" + car.Model + ", Color=" + car.Color);
-            Console.WriteLine("Speed: " + car.CurrentSpeed + " km/h, Fuel: " + car.FuelLevel + "L");
+            Console.WriteLine("Ajouter un véhicule");
+            Console.WriteLine("Type de véhicule: 1) Voiture 2) Camion 3) Hybride");
+            Console.Write("Choix: ");
+            string typeChoice = Console.ReadLine() ?? "";
+            Console.Write("Marque: ");
+            string brand = Console.ReadLine() ?? "";
+            Console.Write("Couleur: ");
+            string color = Console.ReadLine() ?? "";
 
-            // Test Truck class
-            Console.WriteLine("\n-- Testing Truck --");
-            Truck truck = new Truck
-            {
-                Brand = "Volvo",
-                Color = "Red",
-                Tonnage = 10.5,
-                CurrentSpeed = 0,
-                FuelLevel = 100
-            };
-            Console.WriteLine("Truck: Brand=" + truck.Brand + ", Color=" + truck.Color + ", Tonnage=" + truck.Tonnage + "T");
-            Console.WriteLine("Speed: " + truck.CurrentSpeed + " km/h, Fuel: " + truck.FuelLevel + "L");
+            Vehicle vehicle;
 
-            // Test HybridCar class
-            Console.WriteLine("\n-- Testing HybridCar --");
-            Hybridcar hybridcar = new Hybridcar
+            switch (typeChoice)
             {
-                Brand = "Toyota",
-                Color = "Green",
-                CurrentSpeed = 0,
-                FuelLevel = 40,
-                BatteryLevel = 100
-            };
-            Console.WriteLine("HybridCar: Brand=" + hybridcar.Brand + ", Color=" + hybridcar.Color);
-            Console.WriteLine("Speed: " + hybridcar.CurrentSpeed + " km/h, Fuel: " + hybridcar.FuelLevel + "L, Battery: " + hybridcar.BatteryLevel + "%");
+                case "1":
+                    var car = new Car();
+                    car.Brand = brand;
+                    car.Color = color;
+                    car.Model = ReadString("Modèle: ");
+                    car.CurrentSpeed = 0;
+                    car.FuelLevel = ReadDouble("Niveau de carburant (L): ");
+                    vehicle = car;
+                    break;
+                case "2":
+                    var truck = new Truck();
+                    truck.Brand = brand;
+                    truck.Color = color;
+                    truck.Tonnage = ReadDouble("Tonnage: ");
+                    truck.CurrentSpeed = 0;
+                    truck.FuelLevel = ReadDouble("Niveau de carburant (L): ");
+                    vehicle = truck;
+                    break;
+                case "3":
+                    var hybrid = new Hybridcar();
+                    hybrid.Brand = brand;
+                    hybrid.Color = color;
+                    hybrid.CurrentSpeed = 0;
+                    hybrid.FuelLevel = ReadDouble("Niveau de carburant (L): ");
+                    hybrid.BatteryLevel = ReadDouble("Niveau de batterie (%): ");
+                    vehicle = hybrid;
+                    break;
+                default:
+                    Console.WriteLine("Type invalide.");
+                    return;
+            }
+
+            Vehicles.Add(vehicle);
+            Console.WriteLine("Véhicule ajouté : " + vehicle);
         }
 
-        public static void TestTrip()
+        private static void ShowVehicles()
         {
-            // Create points of interest
-            PointOfInterest start = new PointOfInterest
+            Console.WriteLine("Véhicules enregistrés :");
+            if (Vehicles.Count == 0)
             {
-                Name = "Paris",
-                Latitude = 48.8566,
-                Longitude = 2.3522
-            };
+                Console.WriteLine("Aucun véhicule disponible.");
+                return;
+            }
 
-            PointOfInterest destination = new PointOfInterest
+            for (int i = 0; i < Vehicles.Count; i++)
             {
-                Name = "Lyon",
-                Latitude = 45.7640,
-                Longitude = 4.8357
-            };
+                Console.WriteLine((i + 1) + ". " + Vehicles[i]);
+            }
+        }
 
-            // Create vehicle
-            Car vehicle = new Car
+        private static void ShowPlaces()
+        {
+            Console.WriteLine("Lieux enregistrés :");
+            if (Places.Count == 0)
             {
-                Brand = "Renault",
-                Color = "Black",
-                Model = "Scenic",
-                CurrentSpeed = 0,
-                FuelLevel = 60
-            };
+                Console.WriteLine("Aucun lieu disponible.");
+                return;
+            }
 
-            // Create trip
-            Trip trip = new Trip
+            for (int i = 0; i < Places.Count; i++)
             {
-                Vehicle = vehicle,
-                Start = start,
-                Destination = destination,
+                Console.WriteLine((i + 1) + ". " + Places[i]);
+            }
+        }
+
+        private static void CalculateDistance()
+        {
+            Console.WriteLine("Calculer une distance");
+            if (Places.Count < 2)
+            {
+                Console.WriteLine("Il faut au moins deux lieux pour calculer une distance.");
+                return;
+            }
+
+            ShowPlaces();
+            int firstIndex = ReadIndex("Choisir le premier lieu (numéro): ", Places.Count);
+            int secondIndex = ReadIndex("Choisir le second lieu (numéro): ", Places.Count);
+            if (firstIndex == secondIndex)
+            {
+                Console.WriteLine("Les deux lieux doivent être différents.");
+                return;
+            }
+
+            var place1 = Places[firstIndex - 1];
+            var place2 = Places[secondIndex - 1];
+            double distance = place1.GetDistance(place2);
+            Console.WriteLine($"Distance entre {place1.Name} et {place2.Name} : {distance} km");
+        }
+
+        private static void SimulateVehicle()
+        {
+            Console.WriteLine("Simuler une accélération / freinage");
+            if (Vehicles.Count == 0)
+            {
+                Console.WriteLine("Aucun véhicule disponible.");
+                return;
+            }
+
+            ShowVehicles();
+            int index = ReadIndex("Choisir un véhicule (numéro): ", Vehicles.Count);
+            var vehicle = Vehicles[index - 1];
+            Console.WriteLine("1. Accélérer (+10 km/h)");
+            Console.WriteLine("2. Freiner (-10 km/h)");
+            Console.WriteLine("3. Régler la vitesse");
+            Console.Write("Choix: ");
+            string choice = Console.ReadLine() ?? "";
+
+            switch (choice)
+            {
+                case "1":
+                    vehicle.Accelerate();
+                    Console.WriteLine(vehicle + " accélère.");
+                    break;
+                case "2":
+                    vehicle.Brake();
+                    Console.WriteLine(vehicle + " freine.");
+                    break;
+                case "3":
+                    double speed = ReadDouble("Nouvelle vitesse (km/h): ");
+                    vehicle.CurrentSpeed = speed;
+                    Console.WriteLine(vehicle + " passe à " + speed + " km/h.");
+                    break;
+                default:
+                    Console.WriteLine("Action invalide.");
+                    break;
+            }
+        }
+
+        private static void CreateTrip()
+        {
+            Console.WriteLine("Créer un trajet");
+            if (Vehicles.Count == 0)
+            {
+                Console.WriteLine("Ajoutez d’abord un véhicule.");
+                return;
+            }
+            if (Places.Count < 2)
+            {
+                Console.WriteLine("Ajoutez au moins deux lieux.");
+                return;
+            }
+
+            ShowVehicles();
+            int vehicleIndex = ReadIndex("Choisir un véhicule (numéro): ", Vehicles.Count);
+            ShowPlaces();
+            int startIndex = ReadIndex("Choisir le lieu de départ (numéro): ", Places.Count);
+            int endIndex = ReadIndex("Choisir le lieu d’arrivée (numéro): ", Places.Count);
+            if (startIndex == endIndex)
+            {
+                Console.WriteLine("Le départ et l’arrivée doivent être différents.");
+                return;
+            }
+
+            Console.Write("Nom du trajet: ");
+            string tripName = Console.ReadLine() ?? "";
+            if (string.IsNullOrWhiteSpace(tripName))
+            {
+                tripName = "Trajet " + (Trips.Count + 1);
+            }
+
+            var trip = new Trip
+            {
+                Name = tripName,
+                Vehicle = Vehicles[vehicleIndex - 1],
+                Start = Places[startIndex - 1],
+                Destination = Places[endIndex - 1],
                 Starttime = DateTime.Now
             };
+            Trips.Add(trip);
+            Console.WriteLine("Trajet créé : " + trip);
+        }
 
-            Console.WriteLine("Trip Details:");
-            Console.WriteLine("Vehicle: " + trip.Vehicle.Brand);
-            Console.WriteLine("From: " + trip.Start.Name);
-            Console.WriteLine("To: " + trip.Destination.Name);
-            Console.WriteLine("Distance: " + trip.GetDistance() + " km");
-            Console.WriteLine("Estimated Duration: " + trip.GetDurationInMinutes() + " minutes");
-            Console.WriteLine("Start Time: " + Trip.DisplayDateWithoutTime(trip.Starttime));
+        private static void ShowTrips()
+        {
+            Console.WriteLine("Trajets enregistrés :");
+            if (Trips.Count == 0)
+            {
+                Console.WriteLine("Aucun trajet disponible.");
+                return;
+            }
 
-            // Test date formatting
-            Console.WriteLine("\n-- Testing Date Formatting --");
-            DateTime testDate = new DateTime(2026, 5, 10, 14, 30, 0);
-            string formattedDate = Trip.DisplayDateWithoutTime(testDate);
-            Console.WriteLine("Formatted Date: " + formattedDate);
+            for (int i = 0; i < Trips.Count; i++)
+            {
+                Console.WriteLine((i + 1) + ". " + Trips[i]);
+            }
+        }
 
-            // Test date parsing
-            Console.WriteLine("\n-- Testing Date Parsing --");
-            string dateString = "10/05/2026 14:30";
-            DateTime parsedDate = Trip.FromStringToDateTime(dateString);
-            Console.WriteLine("Parsed Date: " + parsedDate.ToString());
+        private static double ReadDouble(string prompt)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                string input = Console.ReadLine() ?? "";
+                if (double.TryParse(input, CultureInfo.InvariantCulture, out double result))
+                {
+                    return result;
+                }
+                Console.WriteLine("Valeur invalide, réessayez.");
+            }
+        }
+
+        private static int ReadInt(string prompt)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                string input = Console.ReadLine() ?? "";
+                if (int.TryParse(input, out int result))
+                {
+                    return result;
+                }
+                Console.WriteLine("Valeur invalide, réessayez.");
+            }
+        }
+
+        private static string ReadString(string prompt)
+        {
+            Console.Write(prompt);
+            return Console.ReadLine() ?? "";
+        }
+
+        private static int ReadIndex(string prompt, int max)
+        {
+            while (true)
+            {
+                int value = ReadInt(prompt);
+                if (value >= 1 && value <= max)
+                {
+                    return value;
+                }
+                Console.WriteLine("Choix invalide. Entrez un numéro entre 1 et " + max + ".");
+            }
         }
     }
 }

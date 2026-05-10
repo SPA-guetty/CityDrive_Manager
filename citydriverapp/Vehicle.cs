@@ -4,8 +4,8 @@ namespace CITYDRIVE_MANAGER.Vehicles
 {
     public class Vehicle
     {
-        public String Brand { get; set; }
-        public String Color { get; set; }
+        public string? Brand { get; set; }
+        public string? Color { get; set; }
         public double CurrentSpeed { get; set; }
         public double FuelLevel { get; set; }
 
