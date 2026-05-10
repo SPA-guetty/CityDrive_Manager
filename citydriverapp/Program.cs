@@ -62,37 +62,47 @@ namespace CITYDRIVE_MANAGER
             name = name.Trim().ToUpper();
             double latitude = ReadDouble("Latitude: ");
             double longitude = ReadDouble("Longitude: ");
-            Console.WriteLine("Type de lieu: 1) Classique 2) Campus 3) Monument historique");
-            Console.Write("Choix: ");
-            string typeChoice = Console.ReadLine() ?? "";
-            PointOfInterest place;
-
-            switch (typeChoice)
+            bool isvalid = false;
+            PointOfInterest place = new PointOfInterest();
+            while (!isvalid)
             {
-                case "2":
-                    var campus = new Campus();
-                    campus.Name = name;
-                    campus.Latitude = latitude;
-                    campus.Longitude = longitude;
-                    campus.Capacity = ReadInt("Capacité (nombre d’étudiants): ");
-                    place = campus;
-                    break;
-                case "3":
-                    var monument = new HistoricalMonument();
-                    monument.Name = name;
-                    monument.Latitude = latitude;
-                    monument.Longitude = longitude;
-                    monument.BuildYear = ReadInt("Année de construction: ");
-                    place = monument;
-                    break;
-                default:
-                    place = new PointOfInterest
-                    {
-                        Name = name,
-                        Latitude = latitude,
-                        Longitude = longitude
-                    };
-                    break;
+                Console.WriteLine("Type de lieu: \n 1) Classique \n 2) Campus \n 3) Monument historique");
+                Console.Write("Choix: ");
+                string typeChoice = Console.ReadLine() ?? "";
+
+                switch (typeChoice)
+                {
+                    case "1":
+                        place = new PointOfInterest
+                        {
+                            Name = name,
+                            Latitude = latitude,
+                            Longitude = longitude
+                        };
+                        isvalid = true;
+                        break;
+                    case "2":
+                        var campus = new Campus();
+                        campus.Name = name;
+                        campus.Latitude = latitude;
+                        campus.Longitude = longitude;
+                        campus.Capacity = ReadInt("Capacité (nombre d’étudiants): ");
+                        place = campus;
+                        isvalid = true;
+                        break;
+                    case "3":
+                        var monument = new HistoricalMonument();
+                        monument.Name = name;
+                        monument.Latitude = latitude;
+                        monument.Longitude = longitude;
+                        monument.BuildYear = ReadInt("Année de construction: ");
+                        place = monument;
+                        isvalid = true;
+                        break;
+                    default:
+                        Console.WriteLine("Erreur : Veuillez entrer un chiffre entre 1 et 3.");
+                        break;
+                }
             }
 
             Places.Add(place);
@@ -102,9 +112,6 @@ namespace CITYDRIVE_MANAGER
         private static void AddVehicle()
         {
             Console.WriteLine("Ajouter un véhicule");
-            Console.WriteLine("Type de véhicule: 1) Voiture 2) Camion 3) Hybride");
-            Console.Write("Choix: ");
-            string typeChoice = Console.ReadLine() ?? "";
             Console.Write("Marque: ");
             string brand = Console.ReadLine() ?? "";
             Console.Write("Couleur: ");
@@ -113,40 +120,52 @@ namespace CITYDRIVE_MANAGER
             brand = brand.Trim().ToUpper();
             color = color.Trim().ToUpper();
 
-            Vehicle vehicle;
+            Vehicle vehicle = new Vehicle();
 
-            switch (typeChoice)
+            bool isvalid = false;
+
+            while (!isvalid)
             {
-                case "1":
-                    var car = new Car();
-                    car.Brand = brand;
-                    car.Color = color;
-                    car.Model = ReadString("Modèle: ");
-                    car.CurrentSpeed = 0;
-                    car.FuelLevel = ReadDouble("Niveau de carburant (L): ");
-                    vehicle = car;
-                    break;
-                case "2":
-                    var truck = new Truck();
-                    truck.Brand = brand;
-                    truck.Color = color;
-                    truck.Tonnage = ReadDouble("Tonnage: ");
-                    truck.CurrentSpeed = 0;
-                    truck.FuelLevel = ReadDouble("Niveau de carburant (L): ");
-                    vehicle = truck;
-                    break;
-                case "3":
-                    var hybrid = new Hybridcar();
-                    hybrid.Brand = brand;
-                    hybrid.Color = color;
-                    hybrid.CurrentSpeed = 0;
-                    hybrid.FuelLevel = ReadDouble("Niveau de carburant (L): ");
-                    hybrid.BatteryLevel = ReadDouble("Niveau de batterie (%): ");
-                    vehicle = hybrid;
-                    break;
-                default:
-                    Console.WriteLine("Type invalide.");
-                    return;
+                Console.WriteLine("Type de véhicule: \n 1) Voiture \n 2) Camion \n 3) Hybride");
+                Console.Write("Choix: ");
+                string typeChoice = Console.ReadLine() ?? "";
+
+                switch (typeChoice)
+                {
+                    case "1":
+                        var car = new Car();
+                        car.Brand = brand;
+                        car.Color = color;
+                        car.Model = ReadString("Modèle: ");
+                        car.CurrentSpeed = 0;
+                        car.FuelLevel = ReadDouble("Niveau de carburant (L): ");
+                        vehicle = car;
+                        isvalid = true;
+                        break;
+                    case "2":
+                        var truck = new Truck();
+                        truck.Brand = brand;
+                        truck.Color = color;
+                        truck.Tonnage = ReadDouble("Tonnage: ");
+                        truck.CurrentSpeed = 0;
+                        truck.FuelLevel = ReadDouble("Niveau de carburant (L): ");
+                        vehicle = truck;
+                        isvalid = true;
+                        break;
+                    case "3":
+                        var hybrid = new Hybridcar();
+                        hybrid.Brand = brand;
+                        hybrid.Color = color;
+                        hybrid.CurrentSpeed = 0;
+                        hybrid.FuelLevel = ReadDouble("Niveau de carburant (L): ");
+                        hybrid.BatteryLevel = ReadDouble("Niveau de batterie (%): ");
+                        vehicle = hybrid;
+                        isvalid = true;
+                        break;
+                    default:
+                        Console.WriteLine("Type invalide.");
+                        break;
+                }
             }
 
             Vehicles.Add(vehicle);
@@ -215,34 +234,42 @@ namespace CITYDRIVE_MANAGER
                 Console.WriteLine("Aucun véhicule disponible.");
                 return;
             }
-
+            
             ShowVehicles();
             int index = ReadIndex("Choisir un véhicule (numéro): ", Vehicles.Count);
             var vehicle = Vehicles[index - 1];
-            Console.WriteLine("1. Accélérer (+10 km/h)");
-            Console.WriteLine("2. Freiner (-10 km/h)");
-            Console.WriteLine("3. Régler la vitesse");
-            Console.Write("Choix: ");
-            string choice = Console.ReadLine() ?? "";
-
-            switch (choice)
+            
+            bool isvalid = false;
+            while (!isvalid)
             {
-                case "1":
-                    vehicle.Accelerate();
-                    Console.WriteLine(vehicle + " accélère.");
-                    break;
-                case "2":
-                    vehicle.Brake();
-                    Console.WriteLine(vehicle + " freine.");
-                    break;
-                case "3":
-                    double speed = ReadDouble("Nouvelle vitesse (km/h): ");
-                    vehicle.CurrentSpeed = speed;
-                    Console.WriteLine(vehicle + " passe à " + speed + " km/h.");
-                    break;
-                default:
-                    Console.WriteLine("Action invalide.");
-                    break;
+                Console.WriteLine("1. Accélérer (+10 km/h)");
+                Console.WriteLine("2. Freiner (-10 km/h)");
+                Console.WriteLine("3. Régler la vitesse");
+                Console.Write("Choix: ");
+                string choice = Console.ReadLine() ?? "";
+            
+                switch (choice)
+                {
+                    case "1":
+                        vehicle.Accelerate();
+                        Console.WriteLine(vehicle + " accélère.");
+                        isvalid = true;
+                        break;
+                    case "2":
+                        vehicle.Brake();
+                        Console.WriteLine(vehicle + " freine.");
+                        isvalid = true;
+                        break;
+                    case "3":
+                        double speed = ReadDouble("Nouvelle vitesse (km/h): ");
+                        vehicle.CurrentSpeed = speed;
+                        Console.WriteLine(vehicle + " passe à " + speed + " km/h.");
+                        isvalid = true;
+                        break;
+                    default:
+                        Console.WriteLine("Action invalide.");
+                        break;
+                }
             }
         }
 
