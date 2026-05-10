@@ -26,5 +26,5 @@
 1. **Prérequis** : Avoir installé le SDK .NET (6.0 ou supérieur).
 2. **Cloner le projet** :
    ```bash
-   git clone [https://github.com/SPA-guetty/CityDrive_Manager.git](https://github.com/SPA-guetty/CityDrive_Manager.git)
+   git clone https://github.com/SPA-guetty/CityDrive_Manager.git
 1. **Lancement** : Lancer le projet avec la commande "dotnet run".
