@@ -16,7 +16,7 @@ namespace CITYDRIVE_MANAGER.PointOfInterest_Folder
 
         public override string ToString()
         {
-            return this.Name + " is a historical monument built in " + this.BuildYear.ToString();
+            return (this.Name ?? "Unknown") + "\nCoordonnées : (Lat=" + this.Latitude + ", Long=" + this.Longitude + ")\n" + "Construit en : " + this.BuildYear.ToString() + "\n" + "Google Maps : " + GetGoogleMapsUrl();
         }
     }
 }

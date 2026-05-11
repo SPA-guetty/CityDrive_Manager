@@ -24,7 +24,7 @@ namespace CITYDRIVE_MANAGER.PointOfInterest_Folder
 
         public override string ToString()
         {
-            return (this.Name ?? "Unknown") + " (Lat=" + this.Latitude + ", Long=" + this.Longitude + ")";
+            return (this.Name ?? "Unknown") + "\nCoordonnées : (Lat=" + this.Latitude + ", Long=" + this.Longitude + ") \nGoogle Maps : " + GetGoogleMapsUrl();
         }
 
         public double GetDistance(PointOfInterest other)

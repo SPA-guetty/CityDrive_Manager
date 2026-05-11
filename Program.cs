@@ -224,7 +224,7 @@ namespace CITYDRIVE_MANAGER
 
             for (int i = 0; i < Places.Count; i++)
             {
-                Console.WriteLine((i + 1) + ". " + Places[i]);
+                Console.WriteLine((i + 1) + ". " + Places[i] + "\n");
             }
         }
 

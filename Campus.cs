@@ -8,7 +8,7 @@ namespace CITYDRIVE_MANAGER.PointOfInterest_Folder
 
         public override string ToString()
         {
-            return this.Name + " is a campus with a capacity of " + this.Capacity + " students";
+            return (this.Name ?? "Unknown") + "\nCoordonnées : (Lat=" + this.Latitude + ", Long=" + this.Longitude + ")\n" + "Capacité du campus : " + this.Capacity + " étudiants\n" + "Google Maps : " + GetGoogleMapsUrl();
         }
     }
 }
