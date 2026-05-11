@@ -38,10 +38,10 @@ namespace CITYDRIVE_MANAGER
 
                 switch (input)
                 {
-                    case "1": AddPointOfInterest(); break;
+                    case "1": AddPointOfInterest(); System.Threading.Thread.Sleep(2000); break;
                     case "2": AddVehicle(); break;
-                    case "3": ShowVehicles(); break;
-                    case "4": ShowPlaces(); break;
+                    case "3": ShowVehicles(); System.Threading.Thread.Sleep(2000); break;
+                    case "4": ShowPlaces(); System.Threading.Thread.Sleep(2000); break;
                     case "5": CalculateDistance(); break;
                     case "6": SimulateVehicle(); break;
                     case "7": CreateTrip(); break;
@@ -61,8 +61,23 @@ namespace CITYDRIVE_MANAGER
         {            
             Console.Clear();
             Console.WriteLine("Ajouter un point d’intérêt");
-            Console.Write("Nom: ");
-            string name = Console.ReadLine() ?? "";
+            string name = "";
+            while (name == "")
+            {
+                Console.Write("Nom: ");
+                name = Console.ReadLine() ?? "";
+
+                foreach (var p in Places)
+                {
+                    if (p.Name == name)
+                    {
+                        name = "";
+                        Console.WriteLine("Ce nom est déjà pris, veuillez en choisir un autre.");
+                        break;
+                    }
+                }
+            }
+
             name = name.Trim().ToUpper();
             double latitude = ReadDouble("Latitude: ");
             double longitude = ReadDouble("Longitude: ");
@@ -109,26 +124,8 @@ namespace CITYDRIVE_MANAGER
                 }
             }
 
-            // Vérifier les doublons
-            bool duplicate = false;
-            foreach (var p in Places)
-            {
-                if (p.Name == place.Name)
-                {
-                    duplicate = true;
-                    break;
-                }
-            }
-            
-            if (duplicate)
-            {
-                Console.WriteLine("Erreur : Un lieu avec ce nom existe déjà.");
-            }
-            else
-            {
-                Places.Add(place);
-                Console.WriteLine("Point d'intérêt ajouté : " + place);
-            }
+            Places.Add(place);
+            Console.WriteLine("\nPoint d'intérêt ajouté : " + place);
         }
 
         private static void AddVehicle()
@@ -193,7 +190,7 @@ namespace CITYDRIVE_MANAGER
 
             Vehicles.Add(vehicle);
             Console.WriteLine("Véhicule ajouté : " + vehicle);
-            System.Threading.Thread.Sleep(1500);
+            System.Threading.Thread.Sleep(2000);
         }
 
         private static void ShowVehicles()
@@ -251,7 +248,7 @@ namespace CITYDRIVE_MANAGER
             var place2 = Places[secondIndex - 1];
             double distance = place1.GetDistance(place2);
             Console.WriteLine($"Distance entre {place1.Name} et {place2.Name} : {distance} km");
-            System.Threading.Thread.Sleep(1500);
+            System.Threading.Thread.Sleep(2000);
         }
 
         private static void SimulateVehicle()
@@ -284,21 +281,21 @@ namespace CITYDRIVE_MANAGER
                         Console.WriteLine(vehicle + " accélère.");
                         Console.WriteLine("Vitesse actuelle: " + vehicle.CurrentSpeed + " km/h");
                         isvalid = true;
-                        System.Threading.Thread.Sleep(1500);
+                        System.Threading.Thread.Sleep(2000);
                         break;
                     case "2":
                         vehicle.Brake();
                         Console.WriteLine(vehicle + " freine.");
                         Console.WriteLine("Vitesse actuelle: " + vehicle.CurrentSpeed + " km/h");
                         isvalid = true;
-                        System.Threading.Thread.Sleep(1500);
+                        System.Threading.Thread.Sleep(2000);
                         break;
                     case "3":
                         double speed = ReadDouble("Nouvelle vitesse (km/h): ");
                         vehicle.CurrentSpeed = speed;
                         Console.WriteLine(vehicle + " passe à " + speed + " km/h.");
                         isvalid = true;
-                        System.Threading.Thread.Sleep(1500);
+                        System.Threading.Thread.Sleep(2000);
                         break;
                     default:
                         Console.WriteLine("Action invalide.");
@@ -350,7 +347,7 @@ namespace CITYDRIVE_MANAGER
             };
             Trips.Add(trip);
             Console.WriteLine("Trajet créé : " + trip);
-            System.Threading.Thread.Sleep(1500);
+            System.Threading.Thread.Sleep(2000);
         }
 
         private static void ShowTrips()

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("citydriverapp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9eb59c02d34abed7750beb60a63c339514364724")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+072c1a224a4ac7f0701c9f6be2a85a6249aa0830")]
 [assembly: System.Reflection.AssemblyProductAttribute("citydriverapp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("citydriverapp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
